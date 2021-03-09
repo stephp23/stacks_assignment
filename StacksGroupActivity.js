@@ -51,12 +51,13 @@ class Stack {
 //     //  printStack function
 //     //  Can also be done with while loop and .pop()
 //     //  Will still be O(n) runtime
-//     printStack() {
-//         let str = "";
-//         for (let i = 0; i < this.items.length; i++)
-//             str += this.items[i] + " ";
-//         return str;
-//     }
+     printStack() {
+         let str = "";
+       for (let i = 0; i < this.items.length; i++) {
+         str += this.items[i] + " ";
+       }
+         return str;
+     }
 }
 ​
 //  Create object of the stack class
@@ -79,3 +80,89 @@ let newStrStack = new Stack();
 
 
 let newStr = "mother"
+
+// 1) Given a string, check if it is a palindrome by using stacks methods only.
+
+function lookForPalindrome(str) {
+  let flippedWord = "";
+  const myStack = new Stack();
+
+  for (let i = 0; i < str.length; i++) {
+    myStack.push(str[i]);
+  }
+
+  for (let j = 0; j < str.length; j++) {
+    flippedWord + - myStack.pop();
+  }
+
+  return flippedWord === str;
+
+
+}
+
+console.log(lookForPalindrome("anna"));
+
+// 2) Given an input string consisting of brackets such as "{ ( ) } [ ]" 
+// write a function to check whether the orders of each respective pair of 
+// brackets are correct.
+
+const checkBracketOrder = (input) => {
+	const startBrackets = ["(", "{", "["];
+	const endingBrackets = [")", "}", "]"];
+
+	let temp = [];
+
+	for (item of input.split("")) {
+		if (startBrackets.includes(item)) {
+			temp.push(item);
+		}
+	}
+
+	for (item of input.split("")) {
+		if (endingBrackets.includes(item)) {
+			temp.push(item);
+		}
+	}
+
+	if (temp.length % 2 === 1) {
+		return false;
+	}
+	return true;
+};
+
+console.log(checkBracketOrder("{ ( ) } [ ]");
+
+// 3) Given an input stack, reverse the stack using recursion.
+	// Hint: This may require the use of a helper function.
+
+let reverseTheStack = (stack) => {
+	if (!stack.isEmpty()) {
+		let temp = stack.pop();
+		reverseTheStack(stack);
+		insertAtBottom(temp, stack);
+	}
+};
+
+let insertAtBottom = (temp, stack) => {
+	if (stack.isEmpty()) {
+		stack.push(temp);
+	} else {
+		let x = stack.pop();
+		insertAtBottom(temp, stack);
+		stack.push(x);
+	}
+};
+
+let myStack = new Stack();
+
+myStack.push("The");
+myStack.push("weather");
+myStack.push("is");
+myStack.push("great");
+myStack.push("today");
+
+reverseTheStack(myStack);
+
+while (!myStack.isEmpty()) {
+	console.log(myStack.pop());
+}
